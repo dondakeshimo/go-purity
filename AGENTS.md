@@ -1,0 +1,2 @@
+- [README](./README.md) — Application overview and development process.
+- [docs/adr](./docs/adr/) — ADR (Architecture Decision Records)
