@@ -1,14 +1,14 @@
 # go-purity
 
-`go-purity` is a linter to check specified functions are pure.
+`go-purity` is a linter that checks that specified functions are pure.
 
-Go is not oriented to functional programming (FP) , but it is valuable to use essense of FP.
-Purity is one of the most important parts of FP, and it is easy to apply Go projects partially but it is hard to keep consistency of pure functions style.
-`go-purity` supports developers (human and AI) to sustain purity style.
+Go is not oriented toward functional programming (FP), but it is valuable to use the essence of FP.
+Purity is one of the most important aspects of FP. It is easy to apply to Go projects partially, but it is hard to keep the style of pure functions consistent.
+`go-purity` helps developers (human and AI) sustain a pure style.
 
 ## Usage
 
-TBU: This specification is prototype. We needs brashing up.
+TBD: This specification is a prototype. It needs brushing up.
 
 ```go
 //go:linter purity
