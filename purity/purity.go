@@ -59,7 +59,7 @@ const (
 // (ReadWeak, default allowlist/denylist).
 type Config struct {
 	// ReadPolicy selects the read policy. The zero value is ReadWeak.
-	ReadPolicy ReadPolicy
+	ReadPolicy ReadPolicy //exhaustruct:optional
 }
 
 // ReasonCode identifies why a function was classified as Impure or Unknown.
@@ -164,14 +164,14 @@ type Reason struct {
 	// Code is the reason category.
 	Code ReasonCode
 	// Pos is the source position, if available.
-	Pos token.Position
+	Pos token.Position //exhaustruct:optional
 	// Detail is a human-readable note (variable name, callee name, ...).
-	Detail string
+	Detail string //exhaustruct:optional
 	// Callee is the relevant function for call-related reasons.
-	Callee *ssa.Function
+	Callee *ssa.Function //exhaustruct:optional
 	// Provisional reports that the impurity may disappear once a precise
 	// escape analysis is implemented (e.g. writes to a local allocation).
-	Provisional bool
+	Provisional bool //exhaustruct:optional
 }
 
 // Result is the purity verdict for a single function.
@@ -182,7 +182,7 @@ type Result struct {
 	// Provisional is true when the function is Impure solely due to
 	// provisional reasons (writes that a future escape analysis may prove
 	// local).
-	Provisional bool
+	Provisional bool //exhaustruct:optional
 }
 
 // Report is the result of an Analyze call.
@@ -340,6 +340,7 @@ func (a *Analyzer) resultFor(fn *ssa.Function, info *funcInfo, verdicts map[*ssa
 }
 
 func reasonVerdict(r Reason) Verdict {
+	//nolint:exhaustive // every ReasonCode not listed here is Impure.
 	switch r.Code {
 	case RIndirectCall, RExternalUnmodeled, RCallsUnknown:
 		return Unknown
