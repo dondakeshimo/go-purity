@@ -27,8 +27,8 @@ type callSite struct {
 
 type funcInfo struct {
 	fn           *ssa.Function
-	localReasons []Reason
-	callSites    []callSite
+	localReasons []Reason   //exhaustruct:optional
+	callSites    []callSite //exhaustruct:optional
 }
 
 func (fi *funcInfo) addReason(r Reason) {
@@ -78,7 +78,7 @@ func (a *Analyzer) instructionReasons(instr ssa.Instruction, si *sharedInfo, cg 
 			info.addReason(Reason{Code: RStoreParam, Pos: pos, Detail: ins.Addr.Name()})
 		case rootLocal:
 			// local write: pure
-		default:
+		case rootOther:
 			info.addReason(Reason{Code: RStoreOther, Pos: pos, Detail: ins.Addr.Name(), Provisional: true})
 		}
 
@@ -88,7 +88,7 @@ func (a *Analyzer) instructionReasons(instr ssa.Instruction, si *sharedInfo, cg 
 			// local map: pure
 		case rootGlobal, rootParam:
 			info.addReason(Reason{Code: RMapUpdate, Pos: pos, Detail: ins.Map.Name()})
-		default:
+		case rootOther:
 			info.addReason(Reason{Code: RMapUpdate, Pos: pos, Detail: ins.Map.Name(), Provisional: true})
 		}
 
@@ -144,7 +144,7 @@ func (a *Analyzer) instructionReasons(instr ssa.Instruction, si *sharedInfo, cg 
 			info.addReason(Reason{Code: RMapRange, Pos: pos, Detail: ins.X.Name()})
 		case rangeChan:
 			info.addReason(Reason{Code: RRecv, Pos: pos, Detail: ins.X.Name()})
-		default:
+		case rangeOther:
 			if code, ok := a.readRefReason(ins.X, si); ok {
 				info.addReason(Reason{Code: code, Pos: pos, Detail: ins.X.Name()})
 			}

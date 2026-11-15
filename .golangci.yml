@@ -2,6 +2,9 @@ version: "2"
 
 run:
   timeout: 5m
+  # Test files are excluded from linting; they are still covered by gofmt,
+  # go vet, and go test in CI.
+  tests: false
 
 linters:
   default: standard
@@ -10,6 +13,8 @@ linters:
     - copyloopvar
     - durationcheck
     - errorlint
+    - exhaustive
+    - exhaustruct_v5
     - gocheckcompilerdirectives
     - gocritic
     - makezero
@@ -22,15 +27,16 @@ linters:
     - usestdlibvars
     - wastedassign
     - whitespace
+  settings:
+    exhaustive:
+      # token.Token is not an enum of this project; our switches only care
+      # about a couple of tokens and handle the rest via a default case.
+      ignore-types:
+        - '^go/token\.Token$'
   exclusions:
     presets:
       - std-error-handling
       - common-false-positives
-    rules:
-      - path: _test\.go
-        linters:
-          - errcheck
-          - noctx
 
 formatters:
   enable:

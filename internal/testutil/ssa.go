@@ -26,6 +26,7 @@ func Build(t *testing.T, src string, targets ...string) (*ssa.Program, []*ssa.Fu
 	}
 
 	pkg := types.NewPackage("example.com/test", "test")
+	//exhaustruct:ignore go/types.Config has many fields irrelevant to this helper.
 	tc := &types.Config{Importer: importer.Default()}
 	spkg, _, err := ssautil.BuildPackage(tc, fset, pkg, []*ast.File{file}, ssa.SanityCheckFunctions|ssa.InstantiateGenerics)
 	if err != nil {
