@@ -1,5 +1,7 @@
 [settings]
 lockfile = true
+# Hold back newly published tool releases for 7 days.
+minimum_release_age = "7d"
 
 [tools]
 go = "latest"

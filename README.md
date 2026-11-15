@@ -52,8 +52,10 @@ func AwesomePureFunc(i1 int) int {
 
 - `mise` is required. Run `mise install --locked` to install Go, golangci-lint,
   and the GitHub CLI.
-- Tool requests in `mise.toml` use `latest`; `mise.lock` pins the resolved
-  versions. Run `mise lock --bump` to update the lockfile.
+- Tool requests in `mise.toml` use `latest`, with
+  `minimum_release_age = "7d"` so releases are held back for a week.
+  `mise.lock` pins the resolved versions; run `mise lock --bump` to update the
+  lockfile within that policy.
 - The `gh-actions-lock` extension is installed or updated by the `postinstall`
   hook. gh extensions are not covered by `mise.lock`, so the extension follows
   the latest release. Run `gh auth login` before installing.
