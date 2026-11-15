@@ -1,2 +1,14 @@
+[settings]
+lockfile = true
+# Hold back newly published tool releases for 7 days.
+minimum_release_age = "7d"
+
 [tools]
-go = "1.27.2"
+go = "latest"
+golangci-lint = "latest"
+gh = "latest"
+
+[hooks]
+# gh extensions are not mise tools, so mise.lock does not record them.
+# Install/update them without a version pin to follow the latest release.
+postinstall = "gh extension install github/gh-actions-lock --force"
