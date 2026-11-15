@@ -50,4 +50,20 @@ func AwesomePureFunc(i1 int) int {
 
 ## Development
 
-- `mise` is required
+- `mise` is required. Run `mise install` to install Go and golangci-lint.
+- `gosec` is run via `go run`, so no separate installation is required.
+
+Run the same checks as CI:
+
+```sh
+go test -race -shuffle=on -covermode=atomic -coverprofile=coverage.out ./...
+go tool cover -func=coverage.out
+
+gofmt -l .
+go vet ./...
+golangci-lint run ./...
+go run github.com/securego/gosec/v2/cmd/gosec@v2.30.0 -fmt=text ./...
+```
+
+CI runs on every push to `main` and on every pull request via
+[`.github/workflows/ci.yml`](./.github/workflows/ci.yml).
