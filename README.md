@@ -50,12 +50,20 @@ func AwesomePureFunc(i1 int) int {
 
 ## Development
 
-- `mise` is required. Run `mise install` to install Go and golangci-lint.
+- `mise` is required. Run `mise install --locked` to install Go, golangci-lint,
+  and the GitHub CLI.
+- Tool requests in `mise.toml` use `latest`; `mise.lock` pins the resolved
+  versions. Run `mise lock --bump` to update the lockfile.
+- The `gh-actions-lock` extension is installed or updated by the `postinstall`
+  hook. gh extensions are not covered by `mise.lock`, so the extension follows
+  the latest release. Run `gh auth login` before installing.
 - `gosec` is run via `go run`, so no separate installation is required.
 
 Run the same checks as CI:
 
 ```sh
+mise install --locked
+
 go test -race -shuffle=on -covermode=atomic -coverprofile=coverage.out ./...
 go tool cover -func=coverage.out
 
